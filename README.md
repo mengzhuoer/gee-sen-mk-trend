@@ -38,16 +38,16 @@
 核心公式：
 
 $$
-\beta=\operatorname{median}\left\{\frac{x_j-x_i}{j-i}\right\}
+\beta=\mathrm{median}\left\{\frac{x_j-x_i}{j-i}\right\}
 $$
 
 $$
-S=\sum_{i<j}\operatorname{sgn}(x_j-x_i),\qquad
-\operatorname{Var}(S)=\frac{n(n-1)(2n+5)-\sum_p t_p(t_p-1)(2t_p+5)}{18}
+S=\sum_{i<j}\mathrm{sgn}(x_j-x_i),\qquad
+\mathrm{Var}(S)=\frac{n(n-1)(2n+5)-\sum_p t_p(t_p-1)(2t_p+5)}{18}
 $$
 
 $$
-Z=\frac{S\mp1}{\sqrt{\operatorname{Var}(S)}},\qquad
+Z=\frac{S\mp1}{\sqrt{\mathrm{Var}(S)}},\qquad
 p=2\left(1-\Phi(|Z|)\right)
 $$
 

@@ -12,7 +12,7 @@ Mann–Kendall（MK）检验是**非参数**的单调趋势检验：不假定数
 对每一对年份 $(i,j)$，$i<j$，定义
 
 $$
-\operatorname{sgn}(x_j-x_i)=
+\mathrm{sgn}(x_j-x_i)=
 \begin{cases}
 +1, & x_j>x_i\\
 0, & x_j=x_i\\
@@ -21,7 +21,7 @@ $$
 $$
 
 $$
-S=\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}\operatorname{sgn}(x_j-x_i)
+S=\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}\mathrm{sgn}(x_j-x_i)
 $$
 
 - $S>0$：后期值总体高于前期值，上升倾向；
@@ -35,18 +35,18 @@ $S$ 的取值范围是 $[-n(n-1)/2,\ +n(n-1)/2]$。$n=22$ 时是 $[-231, 231]$�
 若序列独立且无重复值，
 
 $$
-\operatorname{Var}(S)=\frac{n(n-1)(2n+5)}{18}
+\mathrm{Var}(S)=\frac{n(n-1)(2n+5)}{18}
 $$
 
 真实数据常有重复值（ties），例如 NDVI 转成整数、GPP 为整数、降水为 0。
 重复值会减少 $S$ 的有效变异，必须修正：
 
 $$
-\operatorname{Var}(S)=\frac{n(n-1)(2n+5)-\sum_{p=1}^{g} t_p(t_p-1)(2t_p+5)}{18}
+\mathrm{Var}(S)=\frac{n(n-1)(2n+5)-\sum_{p=1}^{g} t_p(t_p-1)(2t_p+5)}{18}
 $$
 
 其中 $g$ 是不同取值的组数，$t_p$ 是第 $p$ 组的重复个数。
-若所有年份取值都相同，则 $\operatorname{Var}(S)=0$，检验无定义；本仓库规定
+若所有年份取值都相同，则 $\mathrm{Var}(S)=0$，检验无定义；本仓库规定
 $Z=0,\ p=1$，归入“基本稳定”。
 
 ### 等价写法（本地实现使用）
@@ -77,9 +77,9 @@ var_s = n * (n - 1) * (2 * n + 5) / 18.0 - tie_sum / 18.0
 $$
 Z=
 \begin{cases}
-\dfrac{S-1}{\sqrt{\operatorname{Var}(S)}}, & S>0\\[6pt]
+\dfrac{S-1}{\sqrt{\mathrm{Var}(S)}}, & S>0\\[6pt]
 0, & S=0\\[6pt]
-\dfrac{S+1}{\sqrt{\operatorname{Var}(S)}}, & S<0
+\dfrac{S+1}{\sqrt{\mathrm{Var}(S)}}, & S<0
 \end{cases}
 $$
 
@@ -137,7 +137,7 @@ var pValue = ee.Image(1).subtract(normalCDF(Z.abs())).multiply(2).clamp(0, 1);
 因此与 GEE 数组技巧在含 0 数据上会有细微差别。正式计算建议用精确版本。
 
 另一个边界情况：所有年份取值完全相同。此时没有“非 ties 哨兵组”以外的游程，
-GEE 数组技巧得到的修正量为 0，$\operatorname{Var}(S)$ 未修正；但 $S=0$，
+GEE 数组技巧得到的修正量为 0，$\mathrm{Var}(S)$ 未修正；但 $S=0$，
 所以 $Z=0$、$p=1$、分类为“基本稳定”，最终分类不受影响。
 
 ## 7. 最重要的假设：序列独立
@@ -148,7 +148,7 @@ MK 检验假设年份之间相互独立。遥感长时序常存在自相关（�
 本仓库的结果**未做自相关修正**，这是需要在论文/答辩中主动说明的局限。
 正式口径可改用：
 
-- **Hamed–Rao 修正**：先估计序列的自相关，修正 $\operatorname{Var}(S)$；
+- **Hamed–Rao 修正**：先估计序列的自相关，修正 $\mathrm{Var}(S)$；
 - **预白化（pre-whitening）**：先去掉 AR(1) 结构再做 MK；
 - **块 bootstrap / 置换检验**：用重采样构造零分布。
 

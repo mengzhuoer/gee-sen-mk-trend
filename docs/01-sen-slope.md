@@ -8,7 +8,7 @@ Sen's slope（Theil–Sen estimator，简称 Sen 斜率）不拟合一条让残�
 而是把所有年份两两配对，算出每一对之间的斜率，再取这些斜率的**中位数**：
 
 $$
-\beta = \operatorname{median}\left\{\frac{x_j-x_i}{j-i}\ \middle|\ 1 \le i < j \le n\right\}
+\beta = \mathrm{median}\left\{\frac{x_j-x_i}{j-i}\;|\;1 \le i < j \le n\right\}
 $$
 
 其中 $x_i$ 是第 $i$ 年的值，$n$ 是年数。年份不等距时，把 $j-i$ 换成真实时间差即可。

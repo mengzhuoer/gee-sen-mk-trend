@@ -13,11 +13,9 @@ Mann–Kendall（MK）检验是**非参数**的单调趋势检验：不假定数
 
 $$
 \mathrm{sgn}(x_j-x_i)=
-\begin{cases}
-+1, & x_j>x_i\\
-0, & x_j=x_i\\
--1, & x_j<x_i
-\end{cases}
++1\quad(x_j>x_i),\qquad
+0\quad(x_j=x_i),\qquad
+-1\quad(x_j<x_i)
 $$
 
 $$
@@ -28,7 +26,7 @@ $$
 - $S<0$：下降倾向；
 - $S=0$：上升与下降配对相互抵消。
 
-$S$ 的取值范围是 $[-n(n-1)/2,\ +n(n-1)/2]$。$n=22$ 时是 $[-231, 231]$。
+$S$ 的取值范围是 $[-n(n-1)/2, n(n-1)/2]$。$n=22$ 时是 $[-231, 231]$。
 
 ## 3. 方差与 ties 修正
 
@@ -47,7 +45,7 @@ $$
 
 其中 $g$ 是不同取值的组数，$t_p$ 是第 $p$ 组的重复个数。
 若所有年份取值都相同，则 $\mathrm{Var}(S)=0$，检验无定义；本仓库规定
-$Z=0,\ p=1$，归入“基本稳定”。
+$Z=0$、$p=1$，归入“基本稳定”。
 
 ### 等价写法（本地实现使用）
 
@@ -75,12 +73,15 @@ var_s = n * (n - 1) * (2 * n + 5) / 18.0 - tie_sum / 18.0
 ## 4. 标准化与连续性修正
 
 $$
-Z=
-\begin{cases}
-\dfrac{S-1}{\sqrt{\mathrm{Var}(S)}}, & S>0\\[6pt]
-0, & S=0\\[6pt]
-\dfrac{S+1}{\sqrt{\mathrm{Var}(S)}}, & S<0
-\end{cases}
+Z=\frac{S-1}{\sqrt{\mathrm{Var}(S)}}\quad(S>0)
+$$
+
+$$
+Z=0\quad(S=0)
+$$
+
+$$
+Z=\frac{S+1}{\sqrt{\mathrm{Var}(S)}}\quad(S<0)
 $$
 
 ±1 是**连续性修正**（continuity correction），把离散的 $S$ 往 0 的方向挪半个单位，
@@ -93,7 +94,7 @@ $Z>0$ 上升倾向，$Z<0$ 下降倾向。
 双侧检验：
 
 $$
-p=2\left(1-\Phi(|Z|)\right)=2\,\Phi(-|Z|)
+p=2\left(1-\Phi(|Z|)\right)=2\thinspace\Phi(-|Z|)
 $$
 
 其中 $\Phi$ 是标准正态分布函数。GEE 里用 `erf` 实现：

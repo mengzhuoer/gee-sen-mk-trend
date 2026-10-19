@@ -38,7 +38,7 @@
 核心公式：
 
 $$
-\beta=\mathrm{median}\left\{\frac{x_j-x_i}{j-i}\right\}
+\beta=\mathrm{median}\left\lbrace\frac{x_j-x_i}{j-i}\right\rbrace
 $$
 
 $$

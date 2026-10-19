@@ -35,21 +35,16 @@
   → 面积统计 / 制图 / 年际曲线
 ```
 
-核心公式：
+核心公式（GitHub 对 LaTeX 宏限制较多，这里用等宽文本排版，保证各客户端一致可读）：
 
-$$
-\beta=\mathrm{median}\left\lbrace\frac{x_j-x_i}{j-i}\right\rbrace
-$$
+```text
+β = median{ (x_j − x_i) / (j − i) },   1 ≤ i < j ≤ n
 
-$$
-S=\sum_{i<j}\mathrm{sgn}(x_j-x_i),\qquad
-\mathrm{Var}(S)=\frac{n(n-1)(2n+5)-\sum_p t_p(t_p-1)(2t_p+5)}{18}
-$$
-
-$$
-Z=\frac{S\mp1}{\sqrt{\mathrm{Var}(S)}},\qquad
-p=2\left(1-\Phi(|Z|)\right)
-$$
+S = Σ_{i<j} sign(x_j − x_i)
+Var(S) = [ n(n−1)(2n+5) − Σ_p t_p(t_p−1)(2t_p+5) ] / 18
+Z = (S ∓ 1) / √Var(S)
+p = 2 (1 − Φ(|Z|))
+```
 
 α = 0.05 时，|Z| ≥ 1.96 为显著。
 
